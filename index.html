@@ -1,0 +1,71 @@
+<html>
+<head>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="style.css" rel="stylesheet">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Keyboard Authentication</title>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="page-header">
+					<h1>
+						KeyAuthenticator <small>A typing signature based authentication system</small>
+					</h1>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<center>The moon is made of cheese.</center>
+						</h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="userInput">Type Text Given Above Here</label>
+							<input type="text" class="form-control" id="userInput" placeholder="Type Here">
+						</div>
+					</div>
+					<div class="panel-footer">
+						<div class="progress">
+							<div id="progBar" class="progress-bar progress-bar-success progress-bar-striped active" roll="progressbar" style="width: 50%;">
+								<span id="progText">5/10 Completed</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<ul class="nav nav-pills">
+					<li class="active" id="trainMenu">
+						<a href="#">Training Phase</a>
+					</li>
+					<li id="authMenu">
+						<a href="#">Authentication Phase</a>
+					</li>
+					<li id="statsMenu">
+						<a href="#">Statistics</a>
+					</li>
+				</ul>
+				<div class="jumbotron">
+					<h2 id="helpHeader">
+						<u>Training Phase</u>
+					</h2>
+					<p id="helpText">
+						This is the training phase for the typing signature based authentication system. <br>
+						It requires the user to type out a simple sentence <b>10</b> times to generate a typing signature for the user. <br>
+						Once complete, the user can move on to the Authentication Phase.
+					</p>
+					<div class="btn-group btn-group-justified" id="startStopBtn">
+						<a href="#" class="btn btn-primary btn-block">Begin Training</a>
+						<a href="#" class="btn btn-danger btn-block">Stop Training</a>
+					</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+	<script src="key.js"></script>
+</body>
+</html>

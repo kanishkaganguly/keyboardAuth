@@ -67,6 +67,7 @@ function spaceStart() {
 function spaceEnd() {
 	var now = new Date();
 	spaceend_time = now-spacestart_time;
+	console.log("Spacebar Time: " + spaceend_time);
 }
 
 //Keypress Timers
@@ -77,6 +78,7 @@ function keyStart() {
 function keyEnd() {
 	var now = new Date();
 	keyend_time = now-keystart_time;
+	console.log("Keypress Time: " + keyend_time);
 }
 
 //Get Training Text
@@ -113,17 +115,25 @@ function progUpdate(count){
 		enableMenus();
 		$("#userInput").attr('disabled','disabled');
 		avgTotal();
+		avgKey();
 	}
 }
 
 //Key Pressed Down
 $("#userInput").keydown(function(){
 	totalStart();
+	keyStart();
 });
 
 //Key Pressed Up
 $("#userInput").keyup(function(){
-	if($("#userInput").val() == trainingText){
+	
+	if(trainingText.indexOf($("#userInput").val()) > -1){
+		keyEnd();
+		keyArray.push(keyend_time);
+	}
+
+	if($("#userInput").val() ==	trainingText){
 		$("#userInputError").removeClass("has-error");
 		$("#userInputError").addClass("has-success");
 		totalEnd();
@@ -167,7 +177,7 @@ $( "#statsMenu" ).click(function() {
 		$("#authMenu").removeClass( "active");
 		$("#statsMenu").attr( "class","active");
 		$("#helpHeader").html("<u>Statistics</u>");
-		$("#helpText").html("This is the statistics display for the typing signature based authentication system. <br> <br> Average Time For Sentence: " + avgTotalTime + " ms");
+		$("#helpText").html("This is the statistics display for the typing signature based authentication system. <br> <br> Average Time For Sentence: <b>" + avgTotalTime + " ms</b>" + "<br> <br> Average Keypress Time For Sentence: <b>" + avgKeyTime.toFixed(2) + " ms</b>");
 	}
 });
 

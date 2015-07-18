@@ -7,6 +7,11 @@ var keyend_time;
 var trained = false;
 var trainingText;
 var trainingCount = 10;
+var currCount = 0;
+var totalArray = Array();
+var spaceArray = Array();
+var keyArray = Array();
+
 
 //Total Timers
 function totalStart() {
@@ -47,9 +52,31 @@ function getTrainingText(){
 //Training Start Function
 function startTraining(){
 	$("#trainStartBtn").click(function(){
+		$("#userInput").removeAttr('disabled');
 		getTrainingText();
 		$("#userInput").focus();
 	});
+}
+
+//Enable Menus
+function enableMenus(){
+	if(trained == true){
+		$("#authMenu").removeClass("disabled");
+		$("#statsMenu").removeClass("disabled");
+	}
+}
+
+//Update Progress Bar
+function progUpdate(count){
+	if(count <= trainingCount){
+		$("#progBar").attr("style", "width:" +  count*10 + "%;");
+		$("#progText").html(count + "/10 Completed");
+	}else if(count == trainingCount){
+		trained = true;
+		enableMenus();
+		$("#userInput").attr('disabled','disabled');
+		console.log(totalArray.toString());
+	}
 }
 
 //Key Pressed Down
@@ -57,14 +84,17 @@ $("#userInput").keydown(function(){
 	totalStart();
 });
 
-//Key Pressed userInput
+//Key Pressed Up
 $("#userInput").keyup(function(){
 	if($("#userInput").val() == trainingText){
 		$("#userInputError").removeClass("has-error");
 		$("#userInputError").addClass("has-success");
 		totalEnd();
+		totalArray.push(totalend_time);
+		currCount+=1;
+		progUpdate(currCount);
+		$("#userInput").val("");
 	}else{
-		$("#userInput").addClass("focus");
 		$("#userInputError").removeClass("has-success");
 		$("#userInputError").addClass("has-error");
 	}
@@ -82,22 +112,26 @@ $( "#trainMenu" ).click(function() {
 
 //Authentication Menu Click
 $( "#authMenu" ).click(function() {
-	$("#startStopBtn").hide();
-	$("#trainMenu").removeClass( "active");
-	$("#statsMenu").removeClass( "active");
-	$("#authMenu").attr( "class","active");
-	$("#helpHeader").html("<u>Authentication Phase</u>");
-	$("#helpText").html("This is the authentication phase for the typing signature based authentication system. It requires the user to type out a simple sentence 2 times to authenticate himself based on his previously trained typing signature. If his typing matches his signature, then he is authenticated.");
+	if(trained == true){
+		$("#startStopBtn").hide();
+		$("#trainMenu").removeClass( "active");
+		$("#statsMenu").removeClass( "active");
+		$("#authMenu").attr( "class","active");
+		$("#helpHeader").html("<u>Authentication Phase</u>");
+		$("#helpText").html("This is the authentication phase for the typing signature based authentication system. It requires the user to type out a simple sentence 2 times to authenticate himself based on his previously trained typing signature. If his typing matches his signature, then he is authenticated.");
+	}
 });
 
 //Statistics Menu Click
 $( "#statsMenu" ).click(function() {
-	$("#startStopBtn").hide();
-	$("#trainMenu").removeClass( "active");
-	$("#authMenu").removeClass( "active");
-	$("#statsMenu").attr( "class","active");
-	$("#helpHeader").html("<u>Statistics</u>");
-	$("#helpText").html("This is the statistics display for the typing signature based authentication system.");
+	if(trained == true){
+		$("#startStopBtn").hide();
+		$("#trainMenu").removeClass( "active");
+		$("#authMenu").removeClass( "active");
+		$("#statsMenu").attr( "class","active");
+		$("#helpHeader").html("<u>Statistics</u>");
+		$("#helpText").html("This is the statistics display for the typing signature based authentication system.");
+	}
 });
 
 //Page Initialization
@@ -115,6 +149,7 @@ if(trained == false){
 	$("#authMenu").removeClass("disabled");
 	$("#statsMenu").removeClass("disabled");
 }
+$("#userInput").attr('disabled','disabled');
 
 //Start Training
 startTraining();

@@ -1,18 +1,74 @@
-var start_time;
-var end_time;
+var totalstart_time;
+var totalend_time;
+var spacestart_time;
+var spaceend_time;
+var keystart_time;
+var keyend_time;
 var trained = false;
+var trainingText;
+var trainingCount = 10;
 
-function start() {
-	start_time = new Date();
+//Total Timers
+function totalStart() {
+	totalstart_time = new Date();
 }
-function end() {
+
+function totalEnd() {
 	var now = new Date();
-	end_time = now-start_time;
+	totalend_time = now-totalstart_time;
+	console.log("Total Typing Time: " + totalend_time);
 }
 
+//Spacebar Timers
+function spaceStart() {
+	spacestart_time = new Date();
+}
+
+function spaceEnd() {
+	var now = new Date();
+	spaceend_time = now-spacestart_time;
+}
+
+//Keypress Timers
+function keyStart() {
+	keystart_time = new Date();
+}
+
+function keyEnd() {
+	var now = new Date();
+	keyend_time = now-keystart_time;
+}
+
+//Get Training Text
 function getTrainingText(){
-
+	trainingText = $("#trainText").html();
 }
+
+//Training Start Function
+function startTraining(){
+	$("#trainStartBtn").click(function(){
+		getTrainingText();
+		$("#userInput").focus();
+	});
+}
+
+//Key Pressed Down
+$("#userInput").keydown(function(){
+	totalStart();
+});
+
+//Key Pressed userInput
+$("#userInput").keyup(function(){
+	if($("#userInput").val() == trainingText){
+		$("#userInputError").removeClass("has-error");
+		$("#userInputError").addClass("has-success");
+		totalEnd();
+	}else{
+		$("#userInput").addClass("focus");
+		$("#userInputError").removeClass("has-success");
+		$("#userInputError").addClass("has-error");
+	}
+});
 
 //Training Menu Click
 $( "#trainMenu" ).click(function() {
@@ -44,10 +100,14 @@ $( "#statsMenu" ).click(function() {
 	$("#helpText").html("This is the statistics display for the typing signature based authentication system.");
 });
 
+//Page Initialization
 $(document).ready(function(){
+
+//Initialize Progress Bar
 $("#progBar").attr("style", "width: 0%;");
 $("#progText").html("0/10 Completed");
 
+//Disable Menu Items
 if(trained == false){
 	$("#authMenu").attr("class", "disabled");
 	$("#statsMenu").attr("class", "disabled");
@@ -55,4 +115,8 @@ if(trained == false){
 	$("#authMenu").removeClass("disabled");
 	$("#statsMenu").removeClass("disabled");
 }
+
+//Start Training
+startTraining();
+
 });

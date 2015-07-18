@@ -19,11 +19,11 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title">
-							<center>The moon is made of cheese.</center>
+							<center><span id="trainText">The moon is made of cheese.</span></center>
 						</h3>
 					</div>
 					<div class="panel-body">
-						<div class="form-group">
+						<div id="userInputError" class="form-group has-error">
 							<label for="userInput">Type Text Given Above Here</label>
 							<input type="text" class="form-control" id="userInput" placeholder="Type Here">
 						</div>
@@ -59,8 +59,8 @@
 						Once complete, the user can move on to the Authentication Phase.
 					</p>
 					<div class="btn-group btn-group-justified" id="startStopBtn">
-						<a href="#" class="btn btn-primary btn-block">Begin Training</a>
-						<a href="#" class="btn btn-danger btn-block">Stop Training</a>
+						<a href="#" id="trainStartBtn" class="btn btn-primary btn-block">Begin Training</a>
+						<a href="#" id="trainEndBtn" class="btn btn-danger btn-block">Stop Training</a>
 					</div>
 				</div> 
 			</div>

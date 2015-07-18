@@ -6,12 +6,47 @@ var keystart_time;
 var keyend_time;
 var trained = false;
 var trainingText;
-var trainingCount = 10;
+var trainingCount = 5;
 var currCount = 0;
 var totalArray = Array();
 var spaceArray = Array();
 var keyArray = Array();
+var avgTotalTime;
+var avgSpaceTime;
+var avgKeyTime;
 
+//Get Average Time
+function avgTotal(){
+	var sum = 0;
+
+	for(var i = 0; i < totalArray.length; i++){
+		sum += parseInt(totalArray[i], 10);
+	}
+
+	avgTotalTime = sum/totalArray.length;
+}
+
+//Get Average Space Time
+function avgSpace(){
+	var sum = 0;
+
+	for(var i = 0; i < spaceArray.length; i++){
+		sum += parseInt(spaceArray[i], 10);
+	}
+
+	avgSpaceTime = sum/spaceArray.length;
+}
+
+//Get Average Key Time
+function avgKey(){
+	var sum = 0;
+
+	for(var i = 0; i < keyArray.length; i++){
+		sum += parseInt(keyArray[i], 10);
+	}
+
+	avgKeyTime = sum/keyArray.length;
+}
 
 //Total Timers
 function totalStart() {
@@ -68,14 +103,16 @@ function enableMenus(){
 
 //Update Progress Bar
 function progUpdate(count){
-	if(count <= trainingCount){
-		$("#progBar").attr("style", "width:" +  count*10 + "%;");
+	if(count < trainingCount){
+		$("#progBar").attr("style", "width:" +  count*20 + "%;");
 		$("#progText").html(count + "/10 Completed");
 	}else if(count == trainingCount){
+		$("#progBar").attr("style", "width:" +  count*20 + "%;");
+		$("#progText").html("Training Completed");
 		trained = true;
 		enableMenus();
 		$("#userInput").attr('disabled','disabled');
-		console.log(totalArray.toString());
+		avgTotal();
 	}
 }
 
@@ -130,7 +167,7 @@ $( "#statsMenu" ).click(function() {
 		$("#authMenu").removeClass( "active");
 		$("#statsMenu").attr( "class","active");
 		$("#helpHeader").html("<u>Statistics</u>");
-		$("#helpText").html("This is the statistics display for the typing signature based authentication system.");
+		$("#helpText").html("This is the statistics display for the typing signature based authentication system. <br> <br> Average Time For Sentence: " + avgTotalTime + " ms");
 	}
 });
 
